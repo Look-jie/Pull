@@ -1,0 +1,171 @@
+创建本地仓库
+1.哪个目录（pwd 显示当前目录, cd e 进入e盘）
+2.git init
+
+添加文件到本地仓库
+1.git add xx
+2.git commit -m '说明'
+
+运行git status看看当前仓库的状态
+
+添加远程仓库 （名：jie）
+关联远程仓库
+git remote add origin git@github.com:Look-jie/jie.git
+添加后，远程库的名字就是origin，这是Git默认的叫法，也可以改成别的
+master 是分支
+
+把本地库的所有内容推送到远程库上：
+git pull --rebase origin master
+git push -u origin master
+
+
+
+从现在起，只要本地作了提交，就可以通过命令：
+
+$ git push
+推送远程仓库。
+
+
+
+获取Git配置信息，执行以下命令：		git config --list
+
+要关联一个远程库，使用命令git remote add origin git@server-name:path/repo-name.git
+关联后，使用命令git push -u origin master第一次推送master分支的所有内容；
+
+
+检出仓库：        $ git clone git://github.com/jquery/jquery.git
+
+查看远程仓库：	$ git remote -v
+
+添加远程仓库：	$ git remote add [name] [url]
+
+删除远程仓库：	$ git remote rm [name]
+
+修改远程仓库：	$ git remote set-url --push [name] [newUrl]
+
+拉取远程仓库：	$ git pull [remoteName] [localBranchName]
+
+推送远程仓库：	$ git push [remoteName] [localBranchName]
+
+
+1）git clone：	有一个远程的Git版本库，只需要在本地克隆一份
+
+
+2）git init 和 git remote：	'git remote add'命令来增加一个远程服务器端，
+
+
+
+
+
+*如果想把本地的某个分支test提交到远程仓库，并作为远程仓库的master分支，或者作为另外一个名叫test的分支，如下： 
+$git push origin test:master         // 提交本地test分支作为远程的master分支
+
+$git push origin test:test              // 提交本地test分支作为远程的test分支 
+
+
+2）分支(branch)操作相关命令
+
+查看本地分支：	$ git branch
+
+查看远程分支：	$ git branch -r
+
+创建本地分支：	$ git branch [name] ----注意新分支创建后不会自动切换为当前分支
+
+切换分支：	$ git checkout [name]
+
+创建新分支并立即切换到新分支：$ git checkout -b [name]
+
+删除分支：	$ git branch -d [name] ---- -d选项只能删除已经参与了合并的分支，对于未有合并的分支是无法删除的。如果想强制删除一个分支，可以使用-D选项
+
+合并分支：	$ git merge [name] ----将名称为[name]的分支与当前分支合并
+
+创建远程分支(本地分支push到远程)：$ git push origin [name]
+
+删除远程分支：	$ git push origin :heads/[name] 或 $ gitpush origin :[name] 
+
+
+*创建空的分支：(执行命令之前记得先提交你当前分支的修改，否则会被强制删干净没得后悔) 
+$git symbolic-ref HEAD refs/heads/[name]
+
+$rm .git/index
+
+$git clean -fdx 
+
+
+3）版本(tag)操作相关命令
+
+查看版本：	$ git tag
+
+创建版本：	$ git tag [name]
+
+删除版本：	$ git tag -d [name]
+
+查看远程版本：	$ git tag -r
+	
+创建远程版本(本地版本push到远程)：	$ git push origin [name]
+
+删除远程版本：		$ git push origin :refs/tags/[name]
+
+合并远程仓库的tag到本地：	$ git pull origin --tags
+
+上传本地tag到远程仓库：		$ git push origin --tags
+
+创建带注释的tag：	$ git tag -a [name] -m 'yourMessage'
+
+
+
+4) 子模块(submodule)相关操作命令
+
+添加子模块：$ git submodule add [url] [path]
+
+如：$git submodule add git://github.com/soberh/ui-libs.git src/main/webapp/ui-libs
+
+
+初始化子模块：$ git submodule init  ----只在首次检出仓库时运行一次就行
+
+更新子模块：$ git submodule update ----每次更新或切换分支后都需要运行一下
+
+
+删除子模块：（分4步走哦）
+
+1) $ git rm --cached [path]
+
+2) 编辑“.gitmodules”文件，将子模块的相关配置节点删除掉
+
+3) 编辑“ .git/config”文件，将子模块的相关配置节点删除掉
+
+4) 手动删除子模块残留的目录
+
+
+
+5）忽略一些文件、文件夹不提交
+
+在仓库根目录下创建名称为“.gitignore”的文件，写入不需要的文件夹名或文件，每个元素占一行即可，如
+
+target
+
+bin
+
+*.db
+
+
+
+三、 Git 命令详解
+
+现在我们有了本地和远程的版本库，让我们来试着用用Git的基本命令：
+
+git pull：	将代码更新到本地，例如：'git pull origin master'就
+
+git add：是将当前更改或者新增的文件加入到Git的索引中，加入到Git的索引中就表示记入了版本历史中，这也是提交之前所需要执行的一步，例如'git add app/model/user.rb'就会增加app/model/user.rb文件到Git的索引中，该功能类似于SVN的add
+
+git rm：从当前的工作空间中和索引中删除文件，例如'git rm app/model/user.rb'，该功能类似于SVN的rm、del
+
+git commit：提交当前工作空间的修改内容，类似于SVN的commit命令，例如'git commit -m story #3, add user model'，提交的时候必须用-m来输入一条提交信息，该功能类似于SVN的commit
+
+git push：将本地commit的代码更新到远程版本库中，例如'git push origin'就会将本地的代码更新到名为orgin的远程版本库中
+
+git log：查看历史日志，该功能类似于SVN的log
+
+git revert：还原一个版本的修改，必须提供一个具体的Git版本号，例如'git revert bbaf6fb5060b4875b18ff9ff637ce118256d6f20'，Git的版本号都是生成的一个哈希值
+
+
